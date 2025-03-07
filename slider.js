@@ -1,36 +1,36 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     const slider = document.querySelector('.slider');
     const items = document.querySelectorAll('.item');
     let activeItem = null;
 
-    // Add mouse down event to all items
-    items.forEach(item => {
-        item.addEventListener('mousedown', (e) => { 
-            // Pause the slider animation
-            slider.classList.add('paused');
-            
-            // Add enlarged class to clicked item
-            item.classList.add('enlarged');
-            activeItem = item;
-        });
-    });
+    // Function to handle both mouse and touch interactions
+    function activateItem(item) {
+        slider.classList.add('paused'); // Pause the slider
+        item.classList.add('enlarged'); // Enlarge item
+        activeItem = item;
+    }
 
-    // Add mouse up event to document
-    document.addEventListener('mouseup', () => {
+    function deactivateItem() {
         if (activeItem) {
-            // Resume slider animation
-            slider.classList.remove('paused');
-            
-            // Remove enlarged class
-            activeItem.classList.remove('enlarged');
+            slider.classList.remove('paused'); // Resume slider
+            activeItem.classList.remove('enlarged'); // Remove enlargement
             activeItem = null;
         }
-    });
-});
-
-document.addEventListener("contextmenu", function (event) {
-    if (event.target.tagName === "IMG") {
-        event.preventDefault();
     }
+
+    // Add event listeners for both desktop and mobile
+    items.forEach(item => {
+        item.addEventListener('mousedown', () => activateItem(item)); // Desktop
+        item.addEventListener('touchstart', () => activateItem(item)); // Mobile
+    });
+
+    document.addEventListener('mouseup', deactivateItem); // Desktop
+    document.addEventListener('touchend', deactivateItem); // Mobile
+
+    // Prevent right-click on images
+    document.addEventListener("contextmenu", function (event) {
+        if (event.target.tagName === "IMG") {
+            event.preventDefault();
+        }
+    });
 });
