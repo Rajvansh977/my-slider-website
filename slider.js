@@ -3,31 +3,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.item');
     let activeItem = null;
 
-    // Function to handle both mouse and touch interactions
-    function activateItem(item) {
-        slider.classList.add('paused'); // Pause the slider
-        item.classList.add('enlarged'); // Enlarge item
+    // Function to handle touch or mouse start
+    function handleStart(event) {
+        event.preventDefault(); // Prevent default behavior (like long press menu)
+        const item = event.currentTarget; // Get the clicked item
+
+        slider.classList.add('paused'); // Pause the slider animation
+        item.classList.add('enlarged'); // Add zoom effect
         activeItem = item;
     }
 
-    function deactivateItem() {
+    // Function to handle touch or mouse end
+    function handleEnd() {
         if (activeItem) {
-            slider.classList.remove('paused'); // Resume slider
-            activeItem.classList.remove('enlarged'); // Remove enlargement
+            slider.classList.remove('paused'); // Resume animation
+            activeItem.classList.remove('enlarged'); // Remove zoom effect
             activeItem = null;
         }
     }
 
-    // Add event listeners for both desktop and mobile
+    // Add event listeners for both mouse and touch
     items.forEach(item => {
-        item.addEventListener('mousedown', () => activateItem(item)); // Desktop
-        item.addEventListener('touchstart', () => activateItem(item)); // Mobile
+        item.addEventListener('mousedown', handleStart);
+        item.addEventListener('touchstart', handleStart); // For mobile touch
     });
 
-    document.addEventListener('mouseup', deactivateItem); // Desktop
-    document.addEventListener('touchend', deactivateItem); // Mobile
+    document.addEventListener('mouseup', handleEnd);
+    document.addEventListener('touchend', handleEnd); // For mobile touch
 
-    // Prevent right-click on images
+    // Prevent right-click menu on images
     document.addEventListener("contextmenu", function (event) {
         if (event.target.tagName === "IMG") {
             event.preventDefault();
