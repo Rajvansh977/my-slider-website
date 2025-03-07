@@ -143,8 +143,17 @@
 .banner .slider .item.enlarged img {
     transform: scale(2);
     transition: all 0.3s ease;
+    filter: drop-shadow(0px 20px 40px rgba(0, 0, 0, 0.7));
 }
 
 .banner .slider .item {
     transition: all 0.3s ease;
 }
+.banner .slider .item {
+    position: absolute;
+    inset: 0 0 0 0;
+    transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(550px);
+    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.7); 
+    transition: box-shadow 0.3s ease-in-out;
+}
+
