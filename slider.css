@@ -153,7 +153,15 @@
     position: absolute;
     inset: 0 0 0 0;
     transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(550px);
-    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.7); 
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5); 
     transition: box-shadow 0.3s ease-in-out;
 }
+.item {
+    position: relative;
+    transform: translateZ(0);
+}
+.slider {
+    overflow: hidden;
+}
+
 
